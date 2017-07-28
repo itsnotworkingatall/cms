@@ -32,6 +32,8 @@ if (isset($_POST['update_post'])) {
     $postContent   = $_POST['content'];
     $postCategory  = $_POST['category'];
     
+    $postContent = mysqli_real_escape_string($connectionToDB, $postContent);
+    
     move_uploaded_file($postImageTemp, "../images/$postImage");
     
     if(empty($postImage)){
@@ -55,6 +57,7 @@ if (isset($_POST['update_post'])) {
 
     $updatePost = mysqli_query($connectionToDB, $query);
     confirmQuery($updatePost);
+    header("Location: posts.php");
 }
 ?>
 

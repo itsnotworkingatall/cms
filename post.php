@@ -1,5 +1,6 @@
 <?php include "includes/db.php" ?>
 <?php include "includes/header.php" ?>
+<?php include "admin/includes/functions.php" ?>
 
 <!-- Navigation -->
 <?php include "includes/navigation.php" ?>   
@@ -55,22 +56,28 @@
                 <?php }}} //end of while loop ?>
                 
                 
-<?php
+                <?php
 
-if(isset($_POST['create_comment'])){
-    echo $_POST['comment_author'];
-    $postId = $_GET['p_id'];
-    $commentAuthor = $_POST['comment_author'];
-    $commentEmail = $_POST['comment_email'];
-    $commentContent = $_POST['comment_content'];
-    
-    $query = "INSERT INTO comments (comment_post_id, comment_author, comment_email, comment_content, comment_status, comment_date)"
-    $query .= "VALUES ($postId, '{$commentAuthor}', '{$commentEmail}', '{$commentContent}', 'unapproved', now())"
-   
-    
-}
+                if(isset($_POST['create_comment'])){
+                    //echo $_POST['comment_author'];
+                    $postId = $_GET['p_id'];
+                    if (empty($postId)){
+                        echo 'URL parameter "p_id" is not set - no post to display';
+                    } else {
+                        $commentAuthor = $_POST['comment_author'];
+                        $commentEmail = $_POST['comment_email'];
+                        $commentContent = $_POST['comment_content'];
 
-?>
+                        $query = "INSERT INTO comments (comment_post_id, comment_author, comment_email, comment_content, comment_status, comment_date)";
+                        $query .= "VALUES ($postId, '{$commentAuthor}', '{$commentEmail}', '{$commentContent}', 'unapproved', now())";
+
+                        $addComment = mysqli_query($connectionToDB, $query);
+                        if (confirmQuery($addComment)) {
+                            echo "Your comment has been accepted for moderation."; //currently this can not be seen because of page refreshing.
+                        }
+                    }
+                }
+                ?>
                 
                 
 <!-- Comments Form -->
@@ -96,47 +103,77 @@ if(isset($_POST['create_comment'])){
                 <hr>
 
                 <!-- Posted Comments -->
+                <?php
+                
+                $postId = $_GET['p_id'];
+                
+                $query = "SELECT * FROM comments WHERE comment_post_id = {$postId} ";
+                $query .= "AND comment_status = 'approved' ";
+                $query .= "ORDER BY comment_id DESC ";
+                
+                $getComments = mysqli_query($connectionToDB, $query);
+                confirmQuery($getComments);
+                
+                $commentsQty = mysqli_num_rows($getComments);
+                
+                if($commentsQty == 0) {
+                    echo "No comments here yet";
+                } else {
+                
+                    $commentAuthor = NULL;
+                
+                    while ($row = mysqli_fetch_assoc($getComments)){
+                        $commentAuthor = $row['comment_author'];
+                        $commentEmail = $row['comment_email'];
+                        $commentContent = $row['comment_content'];
+                        $commentDate = $row['comment_date'];
 
-                <!-- Comment -->
-                <div class="media">
-                    <a class="pull-left" href="#">
-                        <img class="media-object" src="http://placehold.it/64x64" alt="">
-                    </a>
-                    <div class="media-body">
-                        <h4 class="media-heading">Start Bootstrap
-                            <small>August 25, 2014 at 9:30 PM</small>
-                        </h4>
-                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                    </div>
-                </div>
-
-                <!-- Comment -->
-                <div class="media">
-                    <a class="pull-left" href="#">
-                        <img class="media-object" src="http://placehold.it/64x64" alt="">
-                    </a>
-                    <div class="media-body">
-                        <h4 class="media-heading">Start Bootstrap
-                            <small>August 25, 2014 at 9:30 PM</small>
-                        </h4>
-                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                        <!-- Nested Comment -->
+                        ?>
+                        <!-- Comment -->
                         <div class="media">
                             <a class="pull-left" href="#">
                                 <img class="media-object" src="http://placehold.it/64x64" alt="">
                             </a>
                             <div class="media-body">
-                                <h4 class="media-heading">Nested Start Bootstrap
+                                <h4 class="media-heading"><?php echo $commentAuthor; ?>
+                                    <small><?php echo $commentDate; ?></small>
+                                </h4>
+                               <?php echo nl2br($commentContent); ?>
+                            </div>
+                        </div>
+
+                        <!-- Comment 
+                        <div class="media">
+                            <a class="pull-left" href="#">
+                                <img class="media-object" src="http://placehold.it/64x64" alt="">
+                            </a>
+                            <div class="media-body">
+                                <h4 class="media-heading">Start Bootstrap
                                     <small>August 25, 2014 at 9:30 PM</small>
                                 </h4>
                                 Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+                        -->
+                                <!-- Nested Comment 
+                                <div class="media">
+                                    <a class="pull-left" href="#">
+                                        <img class="media-object" src="http://placehold.it/64x64" alt="">
+                                    </a>
+                                    <div class="media-body">
+                                        <h4 class="media-heading">Nested Start Bootstrap
+                                            <small>August 25, 2014 at 9:30 PM</small>
+                                        </h4>
+                                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+                                    </div>
+                                </div>
+                                -->
+                                <!-- End Nested Comment 
                             </div>
-                        </div>
-                        <!-- End Nested Comment -->
-                    </div>
-                </div>                
-                
-                
+                        </div>                
+                        -->
+                    <?php 
+                    }   // end of 'while' cycle
+                }       // end of 'else' - rendering the comments
+                ?>
 
             </div>
                     

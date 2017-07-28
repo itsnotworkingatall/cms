@@ -14,7 +14,7 @@
                 
                 <?php 
                 
-                    $query = "SELECT * FROM posts";
+                    $query = "SELECT * FROM posts WHERE post_status = 'published' ";
                     $select_all_posts_query = mysqli_query($connectionToDB, $query);
                     
                     while($row = mysqli_fetch_assoc($select_all_posts_query)){
@@ -24,6 +24,11 @@
                         $postDate = $row['post_date'];
                         $postImage = $row['post_image'];
                         $postContent = $row['post_content'];
+                        $postStatus = $row['post_status'];
+                        
+                        if($postStatus !== 'published') {
+                            echo "No posts here yet";                           
+                        } else {
 
                 ?>
                 
@@ -59,7 +64,7 @@
                 <hr>
                     
                     
-                <?php } //end of while loop ?>
+                <?php }} //end of while loop ?>
 
             </div>
                     

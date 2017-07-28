@@ -24,6 +24,7 @@
             $query = "DELETE FROM posts WHERE post_id = {$postID} ";
             $deletePostQuery = mysqli_query($connectionToDB, $query);
             confirmQUery($deletePostQuery);
+            header("Location: posts.php");
         }
         
         ?>
@@ -40,13 +41,13 @@
             $postCategoryId = $row['post_category_id'];
             $postImage = $row['post_image'];
             $postTags = $row['post_tags'];
-            $postComments = $row['post_comment_count'];
+            //$postComments = $row['post_comment_count'];
             $postDate = $row['post_date'];
             $postStatus = $row['post_status'];
                      
             $fileExists = file_exists ('../images/' . $postImage);
             
-            $query = "SELECT * FROM categories WHERE cat_id=$postCategoryId";
+            $query = "SELECT * FROM categories WHERE cat_id = $postCategoryId ";
             $selectedCategory = mysqli_query($connectionToDB, $query);    
                      
             echo "<tr>";
@@ -74,7 +75,14 @@
                 }
             
                 echo "<td>{$postTags}</td>";
-                echo "<td>{$postComments}</td>";
+            
+                $query = "SELECT * FROM comments WHERE comment_post_id = $postId ";
+                $query .= "AND comment_status = 'approved' ";
+                $getComments = mysqli_query($connectionToDB, $query);
+                confirmQuery($getComments);
+                $postComments = mysqli_num_rows($getComments);
+                
+                echo "<td>{$postComments}</td>";            
                 echo "<td>{$postDate}</td>";
                 echo "<td>{$postStatus}</td>";
                 echo "<td><a href='posts.php?source=edit_post&post_id={$postId}'>Edit</td>"; 
