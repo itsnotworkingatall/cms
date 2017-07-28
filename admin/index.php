@@ -12,6 +12,16 @@
                     <small>Author</small>
                 </h1>
               <?php //include "includes/breadcrumbs.php" ?>  
+              <div>
+                <a href="posts.php">Posts</a>
+                <br>
+                <a href="posts.php?source=add_post">Add new post</a>
+                <br>
+                <a href="categories.php">Categories</a>
+                <br>
+                <a href="comments.php">Comments</a>
+                <br>
+              </div>
             </div>
         </div>
         <!-- /.row -->

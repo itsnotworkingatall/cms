@@ -11,17 +11,17 @@ if (isset($_POST['create_post'])) {
     $postImageTemp = $_FILES['image']['tmp_name'];
     
     $postContent = $_POST['content'];
+    $postContent = mysqli_real_escape_string($connectionToDB, $postContent);
     $postCategory = $_POST['category'];
     $postTags = $_POST['tags'];
-    $postComments = 4;
     $postStatus = $_POST['status'];
     
     
     
     move_uploaded_file($postImageTemp, "../images/$postImage");
     
-    $query = "INSERT INTO posts (post_category_id, post_title, post_author, post_date, post_image, post_content, post_tags, post_comment_count, post_status) ";
-    $query .= "VALUES ({$postCategory}, '{$postTitle}', '{$postAuthor}', now(), '{$postImage}', '{$postContent}', '{$postTags}', '{$postComments}', '{$postStatus}') ";
+    $query = "INSERT INTO posts (post_category_id, post_title, post_author, post_date, post_image, post_content, post_tags, post_status) ";
+    $query .= "VALUES ({$postCategory}, '{$postTitle}', '{$postAuthor}', now(), '{$postImage}', '{$postContent}', '{$postTags}', '{$postStatus}') ";
     
     $createNewPost = mysqli_query($connectionToDB, $query);
     confirmQuery($createNewPost);
