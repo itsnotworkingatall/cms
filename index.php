@@ -12,13 +12,22 @@
 
             <!-- Blog Entries Column -->
             <div class="col-md-8">
+               <h1 class="page-header">
+                    Page Heading
+                    <small>Secondary Text</small>
+                </h1>
                 
                 <?php 
                 
-                    $query = "SELECT * FROM posts ";
+                    $query = "SELECT * FROM posts WHERE post_status = 'published'";
                     $select_all_posts_query = queryToDB($query);
+                    $count = "posts WHERE post_status = 'published'";
+                    $counter = counter($count);
+                    if ($counter == 0) {
+                            echo "No posts here yet";                           
+                    } else {
                     
-                    while($row = mysqli_fetch_assoc($select_all_posts_query)){
+                    while ($row = mysqli_fetch_assoc($select_all_posts_query)) {
                         $postId = $row['post_id'];
                         $postTitle = $row['post_title'];
                         $postAuthor = $row['post_author'];
@@ -26,17 +35,10 @@
                         $postImage = $row['post_image'];
                         $postContent = $row['post_content'];
                         $postStatus = $row['post_status'];
-                        
-                        if($postStatus !== 'published') {
-                            echo "No posts here yet";                           
-                        } else {
 
                 ?>
                 
-                <h1 class="page-header">
-                    Page Heading
-                    <small>Secondary Text</small>
-                </h1>
+                
 
                 <!-- First Blog Post -->
                 <h2>
@@ -60,7 +62,8 @@
                     }
                 ?>
                 </p>
-                <a class="btn btn-primary" href="post.php?p_id=<?php echo $postId ?>">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+                <a class="btn btn-primary" href="post.php?p_id=<?php echo $postId ?>">Read More <span class="glyphicon glyphicon-chevron-right"></span>
+                </a>
 
                 <hr>
                     

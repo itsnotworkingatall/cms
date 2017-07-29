@@ -12,31 +12,38 @@
 
             <!-- Blog Entries Column -->
             <div class="col-md-8">
-                
-                <?php 
-                    if (isset($_GET['c_id'])){
-                        $postCategoryId = $_GET['c_id'];
-                    if (empty($postCategoryId)){
-                            echo 'URL parameter "c_id" is not set - no post to display';
-                        } else {
-                
-                    $query = "SELECT * FROM posts WHERE post_category_id = {$postCategoryId} ";
-                    $select_all_posts_query = queryToDB($query);
-                    
-                    while($row = mysqli_fetch_assoc($select_all_posts_query)){
-                        $postId = $row['post_id'];
-                        $postTitle = $row['post_title'];
-                        $postAuthor = $row['post_author'];
-                        $postDate = $row['post_date'];
-                        $postImage = $row['post_image'];
-                        $postContent = $row['post_content'];
-
-                ?>
-                
-                <h1 class="page-header">
+               <h1 class="page-header">
                     Page Heading
                     <small>Secondary Text</small>
                 </h1>
+                
+                <?php
+                if (isset($_GET['c_id'])) {
+                    $postCategoryId = $_GET['c_id'];
+                    if (empty($postCategoryId)) {
+                        echo 'URL parameter "c_id" is not set - no post to display';
+                    } else {
+
+                        $query = "SELECT * FROM posts WHERE post_category_id = {$postCategoryId} ";
+                        $select_all_posts_query = queryToDB($query);
+
+                        $count = "posts WHERE post_category_id = {$postCategoryId} AND post_status = 'published' ";
+                        $counter = counter($count);
+                        if ($counter == 0) {
+                                echo "No posts here yet";
+                        } else {
+
+                            while ($row = mysqli_fetch_assoc($select_all_posts_query)) {
+                                $postId = $row['post_id'];
+                                $postTitle = $row['post_title'];
+                                $postAuthor = $row['post_author'];
+                                $postDate = $row['post_date'];
+                                $postImage = $row['post_image'];
+                                $postContent = $row['post_content'];
+
+                ?>
+                
+                
 
                 <!-- First Blog Post -->
                 <h2>
@@ -50,23 +57,28 @@
                 <img class="img-responsive" src="images/<?php echo $postImage ?>" alt="">
                 <hr>
                 <p>
-                    <?php 
+                    <?php
                         $truncationValue = 202;
-                        $truncatedPost = substr($postContent,0,$truncationValue);
+                        $truncatedPost = substr($postContent, 0, $truncationValue);
                         echo nl2br($truncatedPost);
 
-                        if (strlen($postContent) > strlen($truncatedPost)) {
-                            echo "...";
-                        }
+                    if (strlen($postContent) > strlen($truncatedPost)) {
+                        echo "...";
+                    }
                     ?>
                 
                 </p>
-                <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+                <a class="btn btn-primary" href="post.php?p_id=<?php echo $postId ?>">Read More <span class="glyphicon glyphicon-chevron-right"></span>
+                </a>
 
                 <hr>
                     
                     
-                <?php }}} //end of while loop ?>
+                <?php
+                            }
+                        }
+                    }
+                } //end of while loop ?>
 
             </div>
                     

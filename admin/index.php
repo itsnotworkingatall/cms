@@ -11,7 +11,7 @@
                     
                     <small><?php //echo $_SESSION['userrole'] ?></small>
                 </h1>
-              <?php //include "includes/breadcrumbs.php" ?>  
+                <?php //include "includes/breadcrumbs.php" ?>  
               
         </div>
         
@@ -28,8 +28,9 @@
                             <div class="col-xs-9 text-right">
                                 <div class='huge'>
                                 <?php
-                                    $count = 'posts';
-                                    counter($count);
+                                    $count = 'posts WHERE post_status = "published"';
+                                    $postsQty = counter($count);
+                                    echo $postsQty;
                                 ?>
                                 </div>
                                 <div>Posts</div>
@@ -55,8 +56,9 @@
                             <div class="col-xs-9 text-right">
                                 <div class='huge'>
                                 <?php
-                                    $count = 'comments';
-                                    counter($count);
+                                    $count = 'comments WHERE comment_status = "approved"';
+                                    $commentsQty = counter($count);
+                                    echo $commentsQty;
                                 ?>
                                 </div>
                               <div>Comments</div>
@@ -82,8 +84,9 @@
                             <div class="col-xs-9 text-right">
                                 <div class='huge'>
                                 <?php
-                                    $count = 'users';
-                                    counter($count);
+                                    $count = 'users WHERE user_role = "1"';
+                                    $usersQty = counter($count);
+                                    echo $usersQty;
                                 ?>
                                 </div>
                                 <div> Users</div>
@@ -109,8 +112,9 @@
                             <div class="col-xs-9 text-right">
                                 <div class='huge'>
                                 <?php
-                                    $count = 'categories';
-                                    counter($count);
+                                    $count = 'categories WHERE cat_status = "Enabled"';
+                                    $categoriesQty = counter($count);
+                                    echo $categoriesQty;
                                 ?>
                                 </div>
                                 <div>Categories</div>
@@ -130,6 +134,62 @@
         
         <!-- /.row -->
         
+        <?php
+            
+            $count = 'posts WHERE post_status = "draft"';
+            $draftPostsQty = counter($count);
+            
+            $count = 'comments WHERE comment_status = "disabled"';
+            $disabledCommentsQty = counter($count);
+            
+            $count = 'users WHERE user_role = "2"';
+            $writersQty = counter($count);
+            
+            $count = 'categories WHERE cat_status = "Disabled"';
+            $disabledCategoriesQty = counter($count);
+        
+        ?>
+        
+        <div class="row">
+           
+            <script type="text/javascript">
+              google.charts.load('current', {'packages':['bar']});
+              google.charts.setOnLoadCallback(drawChart);
+
+              function drawChart() {
+                var data = google.visualization.arrayToDataTable([
+                  ['', 'Published or enabled', 'Draft or disabled'],
+
+                <?php
+
+                $elementText = ['Posts', 'Comments', 'Users', 'Categories'];
+                $elementCountOpen = [$postsQty, $commentsQty, $usersQty, $categoriesQty];
+                $elementCountClosed = [$draftPostsQty, $disabledCommentsQty, $writersQty, $disabledCategoriesQty];
+
+                for ($i = 0; $i < 4; $i++) {
+                ?> 
+                    ['<?php echo $elementText[$i] ?>', <?php echo $elementCountOpen[$i] ?>, <?php echo $elementCountClosed[$i] ?>],
+                <?php
+                }
+                ?>
+
+                ]);
+
+                var options = {
+                  chart: {
+                    title: 'Performance',
+                    subtitle: 'Posts',
+                  }
+                };
+
+                var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+
+                chart.draw(data, google.charts.Bar.convertOptions(options));
+              }
+            </script>
+            
+        </div>
+        <div id="columnchart_material" style="width: 'auto'; height: 500px;"></div>
     </div>
     <!-- /.container-fluid -->
 </div>

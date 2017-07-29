@@ -21,7 +21,7 @@ function counter($result)
     $select = mysqli_query($connectionToDB, $query);
     confirmQuery($select);
     $result = mysqli_num_rows($select);
-    echo $result;
+    return $result;
 }
 
 function confirmQuery($result) 

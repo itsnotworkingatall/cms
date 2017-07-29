@@ -116,7 +116,7 @@
                     echo "No comments here yet";
                 } else {
                 
-                    $commentAuthor = NULL;
+                    $commentAuthor = null;
                 
                     while ($row = mysqli_fetch_assoc($getComments)){
                         $commentAuthor = $row['comment_author'];

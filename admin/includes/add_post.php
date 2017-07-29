@@ -61,18 +61,18 @@ if (isset($_POST['create_post'])) {
    <div class="form-group">
         <select name="category">
             
-            <?php 
+        <?php
             
-                $query = "SELECT * FROM categories";
-                $selectCategories = queryToDB($query);
+            $query = "SELECT * FROM categories";
+            $selectCategories = queryToDB($query);
 
-                while($row = mysqli_fetch_assoc($selectCategories)){
-                    $categoryId = $row['cat_id'];
-                    $categoryTitle = $row['cat_title'];
-                    echo "<option value='$categoryId'>$categoryTitle</option>";
-                }
+            while ($row = mysqli_fetch_assoc($selectCategories)) {
+                $categoryId = $row['cat_id'];
+                $categoryTitle = $row['cat_title'];
+                echo "<option value='$categoryId'>$categoryTitle</option>";
+            }
             
-            ?>
+        ?>
             
         </select>
        
