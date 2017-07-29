@@ -1,6 +1,16 @@
 <?php include "../includes/db.php" ?>
 <?php include "functions.php" ?>
 <?php ob_start(); ?>
+<?php session_start(); ?>
+
+<?php
+
+if (!isset($_SESSION['userrole']) || $_SESSION['userrole'] != 1 || $_SESSION['userstatus'] != 'Enabled') {
+    header("Location: ../index.php");
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
