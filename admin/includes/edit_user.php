@@ -111,7 +111,7 @@ if (isset($_POST['update_user'])) {
                 $roleId = $row['role_id'];
                 $roleTitle = $row['role_title'];
             ?>
-                <option value='<?php echo $roleId ?>'><?php echo $roleTitle ?></option>";
+                <option value='<?php echo $roleId ?>' <?php if ($userRole == $roleId) {echo " selected";} ?> ><?php echo $roleTitle ?></option>";
             <?php
             } //end of while loop
 
