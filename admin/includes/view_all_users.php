@@ -10,43 +10,13 @@
             <th>Email</th>
             <th>Role</th>
             <th>Date</th>
-            <th>Approve</th>
-            <th>Unapprove</th>
+            <th>Status</th>
+            <th>Disable</th>
             <th>Edit</th>
             <th>Delete</th>           
         </tr>
     </thead>
     <tbody>
- 
-    <?php
-        if (isset($_GET['approve'])) {
-            $userId = $_GET['approve'];
-            $query = "UPDATE users SET user_status = 'approved' WHERE user_id = {$userId} ";
-            $approveuserQuery = mysqli_query($connectionToDB, $query);
-            confirmQUery($approveuserQuery);
-            header("Location: users.php");
-        }
-    ?>
-
-    <?php
-        if (isset($_GET['unapprove'])) {
-            $userId = $_GET['unapprove'];
-            $query = "UPDATE users SET user_status = 'disabled' WHERE user_id = {$userId} ";
-            $unapproveuserQuery = mysqli_query($connectionToDB, $query);
-            confirmQUery($unapproveuserQuery);
-            header("Location: users.php");
-        }
-    ?>
-
-    <?php       
-        if (isset($_GET['delete'])) {
-            $userId = $_GET['delete'];
-            $query = "DELETE FROM users WHERE user_id = {$userId} ";
-            $deleteuserQuery = mysqli_query($connectionToDB, $query);
-            confirmQUery($deleteuserQuery);
-            header("Location: users.php");  
-        }
-    ?>
        
     <?php // rendering the table with users
 
@@ -55,14 +25,15 @@
     confirmQUery($selectAllUsers);
 
     while($row = mysqli_fetch_assoc($selectAllUsers)){
-        $userId = $row['user_id'];
-        $userName = $row['user_name'];
-        $userFName = $row['user_first_name'];
-        $userLName = $row['user_last_name'];
-        $userEmail = $row['user_email'];
-        $userImage = $row['user_image'];
-        $userRole = $row['user_role'];
-        $userDate = $row['user_created_at'];
+        $userId     = $row['user_id'];
+        $userName   = $row['user_name'];
+        $userFName  = $row['user_first_name'];
+        $userLName  = $row['user_last_name'];
+        $userEmail  = $row['user_email'];
+        $userImage  = $row['user_image'];
+        $userRole   = $row['user_role'];
+        $userDate   = $row['user_created_at'];
+        $userStatus = $row['user_status'];
         $query = "SELECT * FROM user_roles WHERE role_id = $userRole ";
         $selectUserRoleTitle = mysqli_query($connectionToDB, $query);
         confirmQUery($selectUserRoleTitle);
@@ -79,7 +50,37 @@
             $userImage = "../images/{$userImage}";
         }
         
-    ?>             
+        if($userStatus == 'Enabled') {
+            $action = 'disable';
+            $actionTitle = 'Disable';
+            $actionStatus = 'Disabled';
+        } else {
+            $action = 'enable';
+            $actionTitle = 'Enable';
+            $actionStatus = 'Enabled';
+        }
+        ?> 
+        
+        <?php
+        if (isset($_GET[$action])) {
+            $userId = $_GET[$action];
+            $query = "UPDATE users SET user_status = '{$actionStatus}' WHERE user_id = {$userId} ";
+            $approveuserQuery = mysqli_query($connectionToDB, $query);
+            confirmQUery($approveuserQuery);
+            header("Location: users.php");
+        }
+        ?>
+
+        <?php       
+        if (isset($_GET['delete'])) {
+            $userId = $_GET['delete'];
+            $query = "DELETE FROM users WHERE user_id = {$userId} ";
+            $deleteuserQuery = mysqli_query($connectionToDB, $query);
+            confirmQUery($deleteuserQuery);
+            header("Location: users.php");  
+        }
+        ?>
+                
         <tr>
             <td><?php echo $userId ?></td>
             <td><img height='50'  src='<?php echo $userImage ?>'></td>
@@ -89,9 +90,9 @@
             <td><?php echo $userEmail ?></td>
             <td><?php echo $userRole ?></td>
             <td><?php echo $userDate ?></td>
-            <td><a href='users.php?approve=<?php echo $userId ?>'>Approve</a></td>
-            <td><a href='users.php?unapprove=<?php echo $userId ?>'>Unapprove</a></td>
-            <td><a href='users.php?edit=<?php echo $userId ?>'>Edit</a></td>
+            <td><?php echo $userStatus ?></td>            
+            <td><a href='users.php?<?php echo $action ?>=<?php echo $userId ?>'><?php echo $actionTitle ?></a></td>
+            <td><a href='users.php?source=edit_user&user_id=<?php echo $userId ?>'>Edit</a></td>
             <td><a href='users.php?delete=<?php echo $userId ?>'>Delete</a></td>
         </tr>
 

@@ -10,7 +10,7 @@ if (isset($_POST['create_user'])) {
     $userImage = $_FILES['image']['name'];
     $userImageTemp = $_FILES['image']['tmp_name'];     
     $userRole = $_POST['role'];
-    $userDate = date('d-m-y');
+    //$userDate = date('d-m-y');
     
     move_uploaded_file($userImageTemp, "../images/$userImage");
     
@@ -39,7 +39,7 @@ if (isset($_POST['create_user'])) {
     
     $createNewUser = mysqli_query($connectionToDB, $query);
     confirmQuery($createNewUser);
-    
+    header("Location: users.php");
 }
 
 ?>
