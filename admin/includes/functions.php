@@ -2,6 +2,28 @@
 
 //include "../../includes/db.php";
 
+function queryToDB($query) 
+{
+    global $connectionToDB;
+    $select = mysqli_query($connectionToDB, $query);
+    if(!$select) {
+        die ("Query failed: " . mysqli_error($connectionToDB));
+    } else {
+        return $select;
+    }
+}
+
+
+function counter($result) 
+{
+    global $connectionToDB;
+    $query = "SELECT * FROM {$result} ";
+    $select = mysqli_query($connectionToDB, $query);
+    confirmQuery($select);
+    $result = mysqli_num_rows($select);
+    echo $result;
+}
+
 function confirmQuery($result) 
 {
     global $connectionToDB;

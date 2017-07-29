@@ -13,8 +13,7 @@ $userName = mysqli_real_escape_string($connectionToDB, $userName);
 $userPassword = mysqli_real_escape_string($connectionToDB, $userPassword);
 
 $query = "SELECT * FROM users WHERE user_name = '{$userName}' ";
-$selectUser = mysqli_query($connectionToDB, $query);
-confirmQuery($selectUser);
+$selectUser = queryToDB($query);
     
 while ($row = mysqli_fetch_assoc($selectUser)) {
     $dbId       = $row['user_id'];

@@ -23,8 +23,7 @@
             if (isset($_GET['approve'])) {
                 $commentId = $_GET['approve'];
                 $query = "UPDATE comments SET comment_status = 'approved' WHERE comment_id = {$commentId} ";
-                $approveCommentQuery = mysqli_query($connectionToDB, $query);
-                confirmQUery($approveCommentQuery);
+                $approveCommentQuery = queryToDB($query);
                 header("Location: comments.php");
             }
 
@@ -35,8 +34,7 @@
             if (isset($_GET['unapprove'])) {
                 $commentId = $_GET['unapprove'];
                 $query = "UPDATE comments SET comment_status = 'disabled' WHERE comment_id = {$commentId} ";
-                $unapproveCommentQuery = mysqli_query($connectionToDB, $query);
-                confirmQUery($unapproveCommentQuery);
+                $unapproveCommentQuery = queryToDB($query);
                 header("Location: comments.php");
             }
 
@@ -47,8 +45,7 @@
             if (isset($_GET['delete'])) {
                 $commentId = $_GET['delete'];
                 $query = "DELETE FROM comments WHERE comment_id = {$commentId} ";
-                $deleteCommentQuery = mysqli_query($connectionToDB, $query);
-                confirmQUery($deleteCommentQuery);
+                $deleteCommentQuery = queryToDB($query);
                 header("Location: comments.php");  
             }
 
@@ -56,7 +53,7 @@
         <?php // rendering the table with comments
 
         $query = "SELECT * FROM comments ORDER BY comment_id DESC";
-        $selectAllPosts = mysqli_query($connectionToDB, $query);
+        $selectAllPosts = queryToDB($query);
 
         while($row = mysqli_fetch_assoc($selectAllPosts)){
             $commentId = $row['comment_id'];
@@ -68,7 +65,7 @@
             $commentDate = $row['comment_date'];  
             
             $query = "SELECT * FROM posts WHERE post_id = $commentPostID ";
-            $selectPostsID = mysqli_query($connectionToDB, $query);
+            $selectPostsID = queryToDB($query);
 
             while($row = mysqli_fetch_assoc($selectPostsID)){
                 $postId = $row['post_id'];
@@ -92,9 +89,6 @@
         <?php
         } //end of while loop
         ?>
-        
-
-        
 
     </tbody>
 </table>

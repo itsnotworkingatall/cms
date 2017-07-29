@@ -21,7 +21,7 @@
                 <?php 
                 
                 $query = "SELECT * FROM categories";
-                $select_all_categories_query = mysqli_query($connectionToDB, $query);
+                $select_all_categories_query = queryToDB($query);
                 
                 while($row = mysqli_fetch_assoc($select_all_categories_query)){
                     $category_title = $row['cat_title'];

@@ -1,5 +1,6 @@
 <?php include "includes/db.php" ?>
 <?php include "includes/header.php" ?>
+<?php include "admin/includes/functions.php" ?>
 
 <!-- Navigation -->
 <?php include "includes/navigation.php" ?>   
@@ -20,7 +21,7 @@
                         } else {
                 
                     $query = "SELECT * FROM posts WHERE post_category_id = {$postCategoryId} ";
-                    $select_all_posts_query = mysqli_query($connectionToDB, $query);
+                    $select_all_posts_query = queryToDB($query);
                     
                     while($row = mysqli_fetch_assoc($select_all_posts_query)){
                         $postId = $row['post_id'];

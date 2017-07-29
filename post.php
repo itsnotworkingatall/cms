@@ -20,7 +20,7 @@
                             echo 'URL parameter "p_id" is not set - no post to display';
                         } else {
                             $query = "SELECT * FROM posts WHERE post_id = {$postId} ";
-                            $select_all_posts_query = mysqli_query($connectionToDB, $query);
+                            $select_all_posts_query = queryToDB($query);
                         
                         while($row = mysqli_fetch_assoc($select_all_posts_query)){
                             $postTitle = $row['post_title'];
@@ -71,10 +71,7 @@
                         $query = "INSERT INTO comments (comment_post_id, comment_author, comment_email, comment_content, comment_status, comment_date)";
                         $query .= "VALUES ($postId, '{$commentAuthor}', '{$commentEmail}', '{$commentContent}', 'unapproved', now())";
 
-                        $addComment = mysqli_query($connectionToDB, $query);
-                        if (confirmQuery($addComment)) {
-                            echo "Your comment has been accepted for moderation."; //currently this can not be seen because of page refreshing.
-                        }
+                        $addComment = queryToDB($query);
                     }
                 }
                 ?>
@@ -111,8 +108,7 @@
                 $query .= "AND comment_status = 'approved' ";
                 $query .= "ORDER BY comment_id DESC ";
                 
-                $getComments = mysqli_query($connectionToDB, $query);
-                confirmQuery($getComments);
+                $getComments = queryToDB($query);
                 
                 $commentsQty = mysqli_num_rows($getComments);
                 

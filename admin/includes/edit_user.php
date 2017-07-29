@@ -6,7 +6,7 @@ if (isset($_GET['user_id'])){
 }
 
 $query = "SELECT * FROM users WHERE user_id={$userId}";
-$selectUser = mysqli_query($connectionToDB, $query);
+$selectUser = queryToDB($query);
 
 while($row = mysqli_fetch_assoc($selectUser)){
     $userId       = $row['user_id'];
@@ -32,7 +32,7 @@ if (isset($_POST['update_user'])) {
     
     if(empty($userImage)){
         $query = "SELECT * FROM users WHERE user_id={$userId} ";
-        $selectImage = mysqli_query($connectionToDB, $query);
+        $selectImage = queryToDB($query);
         while($row = mysqli_fetch_array($selectImage)){
             $userImage = $row['user_image'];
         }
@@ -51,8 +51,7 @@ if (isset($_POST['update_user'])) {
     $query .= "user_updated_at ='now()' ";
     $query .= "WHERE user_id   = {$userId} ";
 
-    $updatePost = mysqli_query($connectionToDB, $query);
-    confirmQuery($updatePost);
+    queryToDB($query);
     header("Location: users.php");
 }
 ?>
@@ -104,8 +103,7 @@ if (isset($_POST['update_user'])) {
         <?php 
 
             $query = "SELECT * FROM user_roles";
-            $selectRoles = mysqli_query($connectionToDB, $query);
-            confirmQuery($selectRoles);
+            $selectRoles = queryToDB($query);
 
             while($row = mysqli_fetch_assoc($selectRoles)){
                 $roleId = $row['role_id'];
@@ -122,6 +120,7 @@ if (isset($_POST['update_user'])) {
    
    <div class="form-group">
        <input type="submit" class="btn btn-primary" name="update_user" value="Update User">
+       <input type="reset" class="btn btn-primary" name="reset" value="Undo">
    </div>
       
 </form>

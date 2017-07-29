@@ -1,5 +1,6 @@
 <?php include "includes/db.php" ?>
 <?php include "includes/header.php" ?>
+<?php include "admin/includes/functions.php" ?>
 
 <!-- Navigation -->
 <?php include "includes/navigation.php" ?>   
@@ -17,13 +18,9 @@
     if(isset($_POST['search'])){
         $searchRequest = ($_POST['search']);
         $searchQuery = "SELECT * FROM posts WHERE post_tags LIKE '%$searchRequest%' ";
-        $searchInDB = mysqli_query($connectionToDB, $searchQuery);
-        
-        if(!$searchInDB) {
-            die('Query Failed ' . mysqli_error($connectionToDB));
-        } else {
-            $searchResultsCount = mysqli_num_rows($searchInDB);
-            echo $searchResultsCount . " results found";
+        $searchInDB = queryToDB($query);
+        $searchResultsCount = mysqli_num_rows($searchInDB);
+        echo $searchResultsCount . " results found";
             
 //            $query = "SELECT * FROM posts";
 //                    $select_all_posts_query = mysqli_query($connectionToDB, $query);
@@ -65,7 +62,7 @@
                 
             
         }       
-    }   
+   
 
    ?>             
                     

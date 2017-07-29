@@ -23,8 +23,7 @@ if (isset($_POST['create_post'])) {
     $query = "INSERT INTO posts (post_category_id, post_title, post_author, post_date, post_image, post_content, post_tags, post_status) ";
     $query .= "VALUES ({$postCategory}, '{$postTitle}', '{$postAuthor}', now(), '{$postImage}', '{$postContent}', '{$postTags}', '{$postStatus}') ";
     
-    $createNewPost = mysqli_query($connectionToDB, $query);
-    confirmQuery($createNewPost);
+    queryToDB($query);
     
 }
 
@@ -65,8 +64,7 @@ if (isset($_POST['create_post'])) {
             <?php 
             
                 $query = "SELECT * FROM categories";
-                $selectCategories = mysqli_query($connectionToDB, $query);
-                //confirmQuery($selectCategories);
+                $selectCategories = queryToDB($query);
 
                 while($row = mysqli_fetch_assoc($selectCategories)){
                     $categoryId = $row['cat_id'];

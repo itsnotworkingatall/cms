@@ -21,8 +21,7 @@
     <?php // rendering the table with users
 
     $query = "SELECT * FROM users ORDER BY user_id DESC";
-    $selectAllUsers = mysqli_query($connectionToDB, $query);
-    confirmQUery($selectAllUsers);
+    $selectAllUsers = queryToDB($query);
 
     while($row = mysqli_fetch_assoc($selectAllUsers)){
         $userId     = $row['user_id'];
@@ -35,8 +34,7 @@
         $userDate   = $row['user_created_at'];
         $userStatus = $row['user_status'];
         $query = "SELECT * FROM user_roles WHERE role_id = $userRole ";
-        $selectUserRoleTitle = mysqli_query($connectionToDB, $query);
-        confirmQUery($selectUserRoleTitle);
+        $selectUserRoleTitle = queryToDB($query);
         while($row = mysqli_fetch_assoc($selectUserRoleTitle)){
             $userRoleId = $row['role_id'];
             $userRole = $row['role_title'];
@@ -65,8 +63,7 @@
         if (isset($_GET[$action])) {
             $userId = $_GET[$action];
             $query = "UPDATE users SET user_status = '{$actionStatus}' WHERE user_id = {$userId} ";
-            $approveuserQuery = mysqli_query($connectionToDB, $query);
-            confirmQUery($approveuserQuery);
+            queryToDB($query);
             header("Location: users.php");
         }
         ?>
@@ -75,8 +72,7 @@
         if (isset($_GET['delete'])) {
             $userId = $_GET['delete'];
             $query = "DELETE FROM users WHERE user_id = {$userId} ";
-            $deleteuserQuery = mysqli_query($connectionToDB, $query);
-            confirmQUery($deleteuserQuery);
+            queryToDB($query);
             header("Location: users.php");  
         }
         ?>

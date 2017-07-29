@@ -6,7 +6,7 @@ if (isset($_GET['post_id'])){
 }
 
 $query = "SELECT * FROM posts WHERE post_id={$post_id}";
-$selectAllPosts = mysqli_query($connectionToDB, $query);
+$selectAllPosts = queryToDB($query);
 
     while($row = mysqli_fetch_assoc($selectAllPosts)){
         $postId       = $row['post_id'];
@@ -38,7 +38,7 @@ if (isset($_POST['update_post'])) {
     
     if(empty($postImage)){
         $query = "SELECT * FROM posts WHERE post_id={$post_id} ";
-        $selectImage = mysqli_query($connectionToDB, $query);
+        $selectImage = queryToDB($query);
         while($row = mysqli_fetch_array($selectImage)){
             $postImage = $row['post_image'];
         }
@@ -55,8 +55,7 @@ if (isset($_POST['update_post'])) {
     $query .= "post_category_id ='{$postCategory}' ";
     $query .= "WHERE post_id = {$post_id} ";
 
-    $updatePost = mysqli_query($connectionToDB, $query);
-    confirmQuery($updatePost);
+    queryToDB($query);
     header("Location: posts.php");
 }
 ?>
@@ -110,8 +109,7 @@ if (isset($_POST['update_post'])) {
             <?php 
             
                 $query = "SELECT * FROM categories";
-                $selectCategories = mysqli_query($connectionToDB, $query);
-                //confirmQuery($selectCategories);
+                $selectCategories = queryToDB($query);
 
                 while($row = mysqli_fetch_assoc($selectCategories)){
                     $categoryId = $row['cat_id'];
@@ -136,6 +134,7 @@ if (isset($_POST['update_post'])) {
    
    <div class="form-group">
        <input type="submit" class="btn btn-primary" name="update_post" value="Save Post">
+       <input type="reset" class="btn btn-primary" name="reset" value="Undo">
    </div>
       
 </form>

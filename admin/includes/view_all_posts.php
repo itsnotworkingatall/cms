@@ -22,8 +22,7 @@
         if (isset($_GET['delete'])) {
             $postID = $_GET['delete'];
             $query = "DELETE FROM posts WHERE post_id = {$postID} ";
-            $deletePostQuery = mysqli_query($connectionToDB, $query);
-            confirmQUery($deletePostQuery);
+            queryToDB($query);
             header("Location: posts.php");
         }
         
@@ -32,7 +31,7 @@
         <?php // rendering the table with posts
 
         $query = "SELECT * FROM posts";
-        $selectAllPosts = mysqli_query($connectionToDB, $query);
+        $selectAllPosts = queryToDB($query);
 
         while($row = mysqli_fetch_assoc($selectAllPosts)){
             $postId = $row['post_id'];
@@ -46,9 +45,6 @@
             $postStatus = $row['post_status'];
                      
             $fileExists = file_exists ('../images/' . $postImage);
-            
-            $query = "SELECT * FROM categories WHERE cat_id = $postCategoryId ";
-            $selectedCategory = mysqli_query($connectionToDB, $query);    
                      
             echo "<tr>";
                 echo "<td>{$postId}</td>";
@@ -57,7 +53,7 @@
             
             
                 $query = "SELECT * FROM categories WHERE cat_id = $postCategoryId ";
-                $selectCategoriesID = mysqli_query($connectionToDB, $query);
+                $selectCategoriesID = queryToDB($query);
 
                 while($row = mysqli_fetch_assoc($selectCategoriesID)){
                     $categoryId = $row['cat_id'];
@@ -78,8 +74,7 @@
             
                 $query = "SELECT * FROM comments WHERE comment_post_id = $postId ";
                 $query .= "AND comment_status = 'approved' ";
-                $getComments = mysqli_query($connectionToDB, $query);
-                confirmQuery($getComments);
+                $getComments = queryToDB($query);
                 $postComments = mysqli_num_rows($getComments);
                 
                 echo "<td>{$postComments}</td>";            

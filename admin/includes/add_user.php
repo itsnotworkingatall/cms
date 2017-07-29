@@ -36,9 +36,7 @@ if (isset($_POST['create_user'])) {
     $query .= "now()";
     $query .= ") ";
 
-    
-    $createNewUser = mysqli_query($connectionToDB, $query);
-    confirmQuery($createNewUser);
+    queryToDB($query);
     header("Location: users.php");
 }
 
@@ -83,8 +81,7 @@ if (isset($_POST['create_user'])) {
         <?php 
 
             $query = "SELECT * FROM user_roles";
-            $selectRoles = mysqli_query($connectionToDB, $query);
-            confirmQuery($selectRoles);
+            $selectRoles = queryToDB($query);
 
             while($row = mysqli_fetch_assoc($selectRoles)){
                 $roleId = $row['role_id'];

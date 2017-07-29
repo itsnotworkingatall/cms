@@ -6,7 +6,7 @@
         if(isset($_GET['edit'])){
             $updateCategoryId = $_GET['edit'];
             $query = "SELECT * FROM categories WHERE cat_id = $updateCategoryId ";
-            $selectCategoriesID = mysqli_query($connectionToDB, $query);
+            $selectCategoriesID = queryToDB($query);
 
             while($row = mysqli_fetch_assoc($selectCategoriesID)){
                 $categoryId = $row['cat_id'];
@@ -24,11 +24,8 @@
                 echo "Category name must not be empty";
             } else {
                 echo $updateCategoryTitle;
-                $updateCategoryQuery = "UPDATE categories SET cat_title = '{$updateCategoryTitle}' WHERE cat_id = {$updateCategoryId} ";
-                $updateCategoryAction = mysqli_query($connectionToDB, $updateCategoryQuery);
-                if(!$updateCategoryAction) {
-                   die('Could not update the category ' . mysqli_error($connectionToDB));
-                }
+                $query = "UPDATE categories SET cat_title = '{$updateCategoryTitle}' WHERE cat_id = {$updateCategoryId} ";
+                queryToDB($query);
             header("location: categories.php");
             }
         }
