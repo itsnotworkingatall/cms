@@ -1,6 +1,6 @@
 <?php include "includes/admin_header.php" ?>
 <div id="wrapper">
-<?php include "includes/admin_navigation.php" ?>     
+<?php include "includes/admin_navigation.php" ?>
 <div id="page-wrapper">
     <div class="container-fluid">
         <!-- Page Heading -->
@@ -8,15 +8,15 @@
             <div class="col-lg-12">
                 <h1 class="page-header">
                     Welcome to admin, <?php echo $_SESSION['username'] ?>!
-                    
+
                     <small><?php //echo $_SESSION['userrole'] ?></small>
                 </h1>
-                <?php //include "includes/breadcrumbs.php" ?>  
-              
+                <?php //include "includes/breadcrumbs.php" ?>
+
         </div>
-        
+
         <!-- /.row -->
-        
+
         <div class="row">
             <div class="col-lg-3 col-md-6">
                 <div class="panel panel-primary">
@@ -131,27 +131,27 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- /.row -->
-        
+
         <?php
-            
+
             $count = 'posts WHERE post_status = "draft"';
             $draftPostsQty = counter($count);
-            
+
             $count = 'comments WHERE comment_status = "disabled"';
             $disabledCommentsQty = counter($count);
-            
+
             $count = 'users WHERE user_role = "2"';
             $writersQty = counter($count);
-            
+
             $count = 'categories WHERE cat_status = "Disabled"';
             $disabledCategoriesQty = counter($count);
-        
+
         ?>
-        
+
         <div class="row">
-           
+
             <script type="text/javascript">
               google.charts.load('current', {'packages':['bar']});
               google.charts.setOnLoadCallback(drawChart);
@@ -167,7 +167,7 @@
                 $elementCountClosed = [$draftPostsQty, $disabledCommentsQty, $writersQty, $disabledCategoriesQty];
 
                 for ($i = 0; $i < 4; $i++) {
-                ?> 
+                ?>
                     ['<?php echo $elementText[$i] ?>', <?php echo $elementCountOpen[$i] ?>, <?php echo $elementCountClosed[$i] ?>],
                 <?php
                 }
@@ -187,7 +187,7 @@
                 chart.draw(data, google.charts.Bar.convertOptions(options));
               }
             </script>
-            
+
         </div>
         <div id="columnchart_material" style="width: 'auto'; height: 500px;"></div>
     </div>

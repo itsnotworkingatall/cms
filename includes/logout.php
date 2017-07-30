@@ -8,4 +8,3 @@
     $_SESSION['userstatus'] = null;
 
     header("Location: ../index.php");
-?>

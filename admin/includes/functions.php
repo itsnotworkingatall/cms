@@ -1,20 +1,18 @@
 <?php
 
-//include "../../includes/db.php";
-
-function queryToDB($query) 
+function queryToDB($query)
 {
     global $connectionToDB;
     $select = mysqli_query($connectionToDB, $query);
-    if(!$select) {
-        die ("Query failed: " . mysqli_error($connectionToDB));
+    if (!$select) {
+        die("Query failed: " . mysqli_error($connectionToDB));
     } else {
         return $select;
     }
 }
 
 
-function counter($result) 
+function counter($result)
 {
     global $connectionToDB;
     $query = "SELECT * FROM {$result} ";
@@ -24,11 +22,11 @@ function counter($result)
     return $result;
 }
 
-function confirmQuery($result) 
+function confirmQuery($result)
 {
     global $connectionToDB;
-    if(!$result) {
-        die ("Query failed: " . mysqli_error($connectionToDB));
+    if (!$result) {
+        die("Query failed: " . mysqli_error($connectionToDB));
     }
 }
 
@@ -36,14 +34,14 @@ function confirmQuery($result)
 function createCategory()
 {
     global $connectionToDB;
-    if(isset($_POST['submit'])) {                               
+    if (isset($_POST['submit'])) {
         $newCategoryName = $_POST['category_title'];
-        if($newCategoryName == " " || empty($newCategoryName)) {
+        if ($newCategoryName == " " || empty($newCategoryName)) {
             echo "Enter a new category name!";
         } else {
             $newCategoryQuery = "INSERT INTO categories(cat_title) VALUE ('{$newCategoryName}') ";
             $createCategoryQuery = mysqli_query($connectionToDB, $newCategoryQuery);
-            if(!$createCategoryQuery) {
+            if (!$createCategoryQuery) {
                 die("category was not created " . mysqli_error($connectionToDB));
             }
         }
@@ -56,14 +54,14 @@ function findAllCAtegories()
     $query = "SELECT * FROM categories";
     $selectAllCategories = mysqli_query($connectionToDB, $query);
 
-    while($row = mysqli_fetch_assoc($selectAllCategories)){
+    while ($row = mysqli_fetch_assoc($selectAllCategories)) {
         $categoryId = $row['cat_id'];
         $categoryTitle = $row['cat_title'];
         echo "<tr>";
-        echo "<td>{$categoryId}</td>"; 
-        echo "<td>{$categoryTitle}</td>"; 
-        echo "<td><a href='categories.php?edit={$categoryId}'>Edit</td>"; 
-        echo "<td><a href='categories.php?delete={$categoryId}'>Delete</td>"; 
+        echo "<td>{$categoryId}</td>";
+        echo "<td>{$categoryTitle}</td>";
+        echo "<td><a href='categories.php?edit={$categoryId}'>Edit</td>";
+        echo "<td><a href='categories.php?delete={$categoryId}'>Delete</td>";
         echo "</tr>";
     }
 }
@@ -71,19 +69,17 @@ function findAllCAtegories()
 function deleteCategory()
 {
     global $connectionToDB;
-    if(isset($_GET['delete'])){
+    if (isset($_GET['delete'])) {
         $deleteCategoryId = $_GET['delete'];
 
         $deleteCategoryQuery = "DELETE FROM categories WHERE cat_id = {$deleteCategoryId} ";
         $deleteCategoryAction = mysqli_query($connectionToDB, $deleteCategoryQuery);
 
-        if(!$deleteCategoryAction) {
-           die('Could not delete the category ' . mysqli_error($connectionToDB));
+        if (!$deleteCategoryAction) {
+            die('Could not delete the category ' . mysqli_error($connectionToDB));
         } else {
-           header("location: categories.php");
+            header("location: categories.php");
         }
     }
-    
-}
 
-?>
+}

@@ -1,4 +1,3 @@
-
 <table class="table table-bordered table-hover">
     <thead>
         <tr>
@@ -12,67 +11,67 @@
             <th>Approve</th>
             <th>Unapprove</th>
             <th>Edit</th>
-            <th>Delete</th>           
+            <th>Delete</th>
         </tr>
     </thead>
     <tbody>
- 
+
 
         <?php
 
-            if (isset($_GET['approve'])) {
-                $commentId = $_GET['approve'];
-                $query = "UPDATE comments SET comment_status = 'approved' WHERE comment_id = {$commentId} ";
-                $approveCommentQuery = queryToDB($query);
-                header("Location: comments.php");
-            }
+        if (isset($_GET['approve'])) {
+            $commentId = $_GET['approve'];
+            $query = "UPDATE comments SET comment_status = 'approved' WHERE comment_id = {$commentId} ";
+            $approveCommentQuery = queryToDB($query);
+            header("Location: comments.php");
+        }
 
         ?>
 
         <?php
 
-            if (isset($_GET['unapprove'])) {
-                $commentId = $_GET['unapprove'];
-                $query = "UPDATE comments SET comment_status = 'disabled' WHERE comment_id = {$commentId} ";
-                $unapproveCommentQuery = queryToDB($query);
-                header("Location: comments.php");
-            }
+        if (isset($_GET['unapprove'])) {
+            $commentId = $_GET['unapprove'];
+            $query = "UPDATE comments SET comment_status = 'disabled' WHERE comment_id = {$commentId} ";
+            $unapproveCommentQuery = queryToDB($query);
+            header("Location: comments.php");
+        }
 
         ?>
 
         <?php
 
-            if (isset($_GET['delete'])) {
-                $commentId = $_GET['delete'];
-                $query = "DELETE FROM comments WHERE comment_id = {$commentId} ";
-                $deleteCommentQuery = queryToDB($query);
-                header("Location: comments.php");  
-            }
+        if (isset($_GET['delete'])) {
+            $commentId = $_GET['delete'];
+            $query = "DELETE FROM comments WHERE comment_id = {$commentId} ";
+            $deleteCommentQuery = queryToDB($query);
+            header("Location: comments.php");
+        }
 
-        ?>      
+        ?>
         <?php // rendering the table with comments
 
         $query = "SELECT * FROM comments ORDER BY comment_id DESC";
         $selectAllPosts = queryToDB($query);
 
-        while($row = mysqli_fetch_assoc($selectAllPosts)){
+        while ($row = mysqli_fetch_assoc($selectAllPosts)) {
             $commentId = $row['comment_id'];
             $commentPostID = $row['comment_post_id'];
             $commentAuthor = $row['comment_author'];
             $commentEmail = $row['comment_email'];
             $commentContent = $row['comment_content'];
             $commentStatus = $row['comment_status'];
-            $commentDate = $row['comment_date'];  
-            
+            $commentDate = $row['comment_date'];
+
             $query = "SELECT * FROM posts WHERE post_id = $commentPostID ";
             $selectPostsID = queryToDB($query);
 
-            while($row = mysqli_fetch_assoc($selectPostsID)){
+            while ($row = mysqli_fetch_assoc($selectPostsID)) {
                 $postId = $row['post_id'];
-                $postTitle = $row['post_title']; 
+                $postTitle = $row['post_title'];
             }
-            
-        ?>             
+
+        ?>
         <tr>
             <td><?php echo $commentId ?></td>
             <td><?php echo $commentAuthor ?></td>

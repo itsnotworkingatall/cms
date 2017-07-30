@@ -12,9 +12,15 @@
             </div>
             <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">
-               <li class="active"><a href="../index.php">Frontend</a></li>
+                <li class="active">
+                    <a href="../index.php">Frontend</a>
+                </li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $_SESSION['userfirstname'] . " " . $_SESSION['userlastname'] ?> <b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-user"></i>
+                        <?php echo $_SESSION['userfirstname'] . " " . $_SESSION['userlastname'] ?>
+                        <b class="caret"></b>
+                    </a>
                     <ul class="dropdown-menu">
                         <li>
                             <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
@@ -28,7 +34,7 @@
                         </li>
                     </ul>
                 </li>
-                
+
             </ul>
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">
@@ -37,7 +43,9 @@
                         <a href="index.php"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                     </li>
                     <li>
-                        <a href="javascript:;" data-toggle="collapse" data-target="#posts_dropdown"><i class="fa fa-fw fa-arrows-v"></i> Posts <i class="fa fa-fw fa-caret-down"></i></a>
+                        <a href="javascript:;" data-toggle="collapse" data-target="#posts_dropdown">
+                            <i class="fa fa-fw fa-arrows-v"></i> Posts <i class="fa fa-fw fa-caret-down"></i>
+                        </a>
                         <ul id="posts_dropdown" class="collapse">
                             <li>
                                 <a href="./posts.php">View all posts</a>
@@ -50,12 +58,14 @@
                     <li>
                         <a href="./categories.php"><i class="fa fa-fw fa-file"></i> Categories</a>
                     </li>
-                    
+
                     <li>
                         <a href="comments.php"><i class="fa fa-fw fa-file"></i> Comments</a>
                     </li>
                     <li>
-                        <a href="javascript:;" data-toggle="collapse" data-target="#users"><i class="fa fa-fw fa-arrows-v"></i> Users <i class="fa fa-fw fa-caret-down"></i></a>
+                        <a href="javascript:;" data-toggle="collapse" data-target="#users">
+                            <i class="fa fa-fw fa-arrows-v"></i> Users <i class="fa fa-fw fa-caret-down"></i>
+                        </a>
                         <ul id="users" class="collapse">
                             <li>
                                 <a href="users.php">View all users</a>

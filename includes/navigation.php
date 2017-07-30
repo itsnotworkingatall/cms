@@ -1,7 +1,5 @@
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container">
-        
-        
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -12,26 +10,27 @@
             </button>
             <a class="navbar-brand" href="index.php">The Blog</a>
         </div>
-        
-        
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                
-                <?php 
-                
-                $query = "SELECT * FROM categories";
+
+                <?php
+
+                $query = "SELECT * FROM categories WHERE cat_status = 'Enabled' ";
                 $select_all_categories_query = queryToDB($query);
-                
-                while($row = mysqli_fetch_assoc($select_all_categories_query)){
-                    $category_title = $row['cat_title'];
-                    echo "<li><a href='#'>{$category_title}</a></li>";
+
+                while ($row = mysqli_fetch_assoc($select_all_categories_query)) {
+                    $categoryId = $row['cat_id'];
+                    $categoryTitle = $row['cat_title'];
+                    ?>
+
+                    <li><a href='index.php?c_id=<?php echo $categoryId ?>'><?php echo $categoryTitle ?></a></li>
+
+                <?php
                 }
-                
                 ?>
-                
-                <li><a href="admin">Admin</a></li>             
-                     
+
+                <li><a href="admin">Admin</a></li>
             </ul>
         </div>
         <!-- /.navbar-collapse -->

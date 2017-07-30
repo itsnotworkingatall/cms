@@ -10,19 +10,19 @@
                 Welcome to admin, <?php echo $_SESSION['username'] ?>!
                 <small></small>
             </h1>
-            
+
             <?php
-                
-                if (isset($_GET['source'])) {
-                    $source = $_GET['source'];
-                } else{
-                    $source ='';
-                }
-                
-                include "includes/view_all_comments.php";
-                    
+
+            if (isset($_GET['source'])) {
+                $source = $_GET['source'];
+            } else {
+                $source ='';
+            }
+
+            include "includes/view_all_comments.php";
+
             ?>
-            
+
         </div>
     </div>
     <!-- /.row -->

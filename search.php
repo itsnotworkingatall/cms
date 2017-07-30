@@ -3,7 +3,7 @@
 <?php include "admin/includes/functions.php" ?>
 
 <!-- Navigation -->
-<?php include "includes/navigation.php" ?>   
+<?php include "includes/navigation.php" ?>
 
     <!-- Page Content -->
     <div class="container">
@@ -12,30 +12,29 @@
 
             <!-- Blog Entries Column -->
             <div class="col-md-8">
-                
-                <?php //search engine  
+                <h1 class="page-header">
+                    Page Heading
+                    <small>Secondary Text</small>
+                </h1>
 
-    if(isset($_POST['search'])){
-        $searchRequest = ($_POST['search']);
-        $searchQuery = "SELECT * FROM posts WHERE post_tags LIKE '%$searchRequest%' ";
-        $searchInDB = queryToDB($query);
-        $searchResultsCount = mysqli_num_rows($searchInDB);
-        echo $searchResultsCount . " results found";
-                             
-                    while($row = mysqli_fetch_assoc($searchInDB)){
+                <?php //search engine
+
+                if (isset($_POST['search'])) {
+                    $searchRequest = ($_POST['search']);
+                    $query = "SELECT * FROM posts WHERE post_tags LIKE '%$searchRequest%' ";
+                    $searchInDB = queryToDB($query);
+                    $searchResultsCount = mysqli_num_rows($searchInDB);
+                    echo $searchResultsCount . " results found";
+
+                    while ($row = mysqli_fetch_assoc($searchInDB)) {
+                        $postId = $row['post_id'];
                         $postTitle = $row['post_title'];
                         $postAuthor = $row['post_author'];
                         $postDate = $row['post_date'];
                         $postImage = $row['post_image'];
                         $postContent = $row['post_content'];
-                        
-                        //echo "<li><a href='#'>{$postTitle}</a></li>";
-                        ?>
-                
-                <h1 class="page-header">
-                    Page Heading
-                    <small>Secondary Text</small>
-                </h1>
+
+                ?>
 
                 <!-- First Blog Post -->
                 <h2>
@@ -48,31 +47,38 @@
                 <hr>
                 <img class="img-responsive" src="images/<?php echo $postImage ?>" alt="">
                 <hr>
-                <p><?php echo nl2br($postContent) ?></p>
-                <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+                <p>
+                    <?php
+                        $truncationValue = 202;
+                        $truncatedPost = substr($postContent, 0, $truncationValue);
+                        echo nl2br($truncatedPost);
+
+                    if (strlen($postContent) > strlen($truncatedPost)) {
+                        echo "...";
+                    }
+                    ?>
+
+                </p>
+                <a class="btn btn-primary" href="post.php?p_id=<?php echo $postId ?>">
+                    Read More
+                    <span class="glyphicon glyphicon-chevron-right"></span>
+                </a>
 
                 <hr>
-                    
-                    
-                <?php    }
-               
-                
-            
-        }       
-   
 
-   ?>             
-                    
+                <?php
+                    }
+                }
+                ?>
 
             </div>
-                    
 
             <!-- Blog Sidebar Widgets Column -->
-            <?php include "includes/sidebar.php" ?> 
+            <?php include "includes/sidebar.php" ?>
 
         </div>
         <!-- /.row -->
 
         <hr>
 
-<?php include "includes/footer.php" ?>       
+<?php include "includes/footer.php" ?>

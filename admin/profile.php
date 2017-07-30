@@ -1,12 +1,12 @@
 <?php include "includes/admin_header.php" ?>
-<?php if(isset($_SESSION['username'])) {
-    
+<?php if (isset($_SESSION['username'])) {
+
     $userName = $_SESSION['username'];
-    
+
     $query = "SELECT * FROM users WHERE user_name = '{$userName}' ";
     $selectCurrentUserInfo = queryToDB($query);
-    
-    while($row = mysqli_fetch_assoc($selectCurrentUserInfo)) {
+
+    while ($row = mysqli_fetch_assoc($selectCurrentUserInfo)) {
         $userId     = $row['user_id'];
         $userName   = $row['user_name'];
         $userFName  = $row['user_first_name'];
@@ -14,16 +14,16 @@
         $userEmail  = $row['user_email'];
         $userImage  = $row['user_image'];
         $userPassword  = $row['user_password'];
-        
-        $fileExists = file_exists ('../images/' . $userImage);
-        
-        if ($userImage == 'NULL' || $userImage == NULL || $fileExists != TRUE) {
+
+        $fileExists = file_exists('../images/' . $userImage);
+
+        if ($userImage == 'NULL' || $userImage == null || $fileExists != true) {
             $userImage = "../images/placeholderImg.jpg";
         } else {
             $userImage = "../images/{$userImage}";
         }
     }
-    
+
     if (isset($_POST['update_user'])) {
         $userName      = $_POST['username'];
         $userFName     = $_POST['fname'];
@@ -34,10 +34,10 @@
         $userImageTemp = $_FILES['image']['tmp_name'];
         //$userUpdatedAt  = date('d-m-y');
 
-        if(empty($userImage)){
+        if (empty($userImage)) {
             $query = "SELECT * FROM users WHERE user_id={$userId} ";
             $selectImage = queryToDB($query);
-            while($row = mysqli_fetch_array($selectImage)){
+            while ($row = mysqli_fetch_array($selectImage)) {
                 $userImage = $row['user_image'];
             }
         } else {
@@ -56,8 +56,8 @@
 
         queryToDB($query);
         header("Location: users.php");
-}
-    
+    }
+
 }
 ?>
 
@@ -72,7 +72,7 @@
                 Welcome to admin
                 <small><?php echo $_SESSION['username'] ?></small>
             </h1>
-            
+
             <form action="" method="post" enctype="multipart/form-data">
 
                 <div class="form-group">
@@ -107,26 +107,23 @@
                    <p><strong>Current image: </strong></p>
 
                     <?php if (!empty($userImage)) { ?>
-                            <img src="../images/<?php echo $userImage ?>" height="50px" > <?php
-                          } else { ?>
+                            <img src="../images/<?php echo $userImage ?>" height="50px" >
+                    <?php } else { ?>
                             <img src="../images/placeholderImg.jpg" height="50px" >
-                          <?php } ?>
+                    <?php } ?>
                 </div>
 
                 <div class="form-group">
                    <input type="submit" class="btn btn-primary" name="update_user" value="Update Profile">
                    <input type="reset" class="btn btn-primary" name="reset" value="Undo">
                 </div>
-                  
+
                 <div class="form-group">
-                   
+
                 </div>
-                
 
                 </form>
-            
-            
-            
+
         </div>
     </div>
     <!-- /.row -->

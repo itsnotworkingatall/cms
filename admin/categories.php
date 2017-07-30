@@ -10,11 +10,11 @@
                 Welcome to admin, <?php echo $_SESSION['username'] ?>!
                 <small></small>
             </h1>
-            <?php //include "includes/breadcrumbs.php" ?>  
+            <?php //include "includes/breadcrumbs.php" ?>
             <div class="col-xs-6">
-            
+
             <?php createCategory(); ?>
-            
+
             <form action="" method="post">
                 <div class="form-group">
                     <label for="cat-title">Add Category</label>
@@ -27,11 +27,11 @@
 
             <?php //here we are updating selected category name
             if (isset($_GET['edit'])) {
-              $updateCategoryId = $_GET['edit'];
-              include "includes/admin_update_categories.php";
+                $updateCategoryId = $_GET['edit'];
+                include "includes/admin_update_categories.php";
             }
             ?>
-            
+
             </div>
 
             <div class="class col-xs-6">

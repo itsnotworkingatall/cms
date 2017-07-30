@@ -14,7 +14,7 @@ $userPassword = mysqli_real_escape_string($connectionToDB, $userPassword);
 
 $query = "SELECT * FROM users WHERE user_name = '{$userName}' ";
 $selectUser = queryToDB($query);
-    
+
 while ($row = mysqli_fetch_assoc($selectUser)) {
     $dbId       = $row['user_id'];
     $dbUName    = $row['user_name'];
@@ -26,17 +26,17 @@ while ($row = mysqli_fetch_assoc($selectUser)) {
 }
 
 if ($userName === $dbUName && $userPassword === $dbPassword) {
-    
+
     $_SESSION['username'] = $dbUName;
     $_SESSION['userfirstname'] = $dbFName;
     $_SESSION['userlastname'] = $dbLName;
     $_SESSION['userrole'] = $dbRole;
     $_SESSION['userstatus'] = $dbStatus;
-    
+
     header("Location: ../admin");
-    
+
 } else {
-    
+
     header("Location: ../index.php");
-    
+
 }
