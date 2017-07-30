@@ -41,8 +41,11 @@
 
         $fileExists = file_exists('../images/' . $userImage);
 
-        if ($userImage == 'NULL' || $userImage == null || $fileExists != true) {
-            $userImage = "../images/placeholderImg.jpg";
+        if ($userImage == 'NULL' || $userImage == null || $fileExists != true) { // if image not set or not found, creating a random avatar
+            $userImage = create_image();
+            $query = "UPDATE users SET user_image = '{$userImage}' WHERE user_id = {$userId} ";
+            queryToDB($query);
+            $userImage = "../images/{$userImage}";
         } else {
             $userImage = "../images/{$userImage}";
         }
