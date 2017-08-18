@@ -18,6 +18,7 @@ while ($row = mysqli_fetch_assoc($selectAllPosts)) {
     $postDate     = $row['post_date'];
     $postStatus   = $row['post_status'];
     $postContent  = $row['post_content'];
+    $postContent  = htmlspecialchars_decode($postContent);
 
 }
 
@@ -31,6 +32,9 @@ if (isset($_POST['update_post'])) {
     $postContent   = $_POST['content'];
     $postCategory  = $_POST['category'];
 
+
+
+    $postContent = htmlspecialchars($postContent);
     $postContent = mysqli_real_escape_string($connectionToDB, $postContent);
 
     move_uploaded_file($postImageTemp, "../images/$postImage");
@@ -55,7 +59,12 @@ if (isset($_POST['update_post'])) {
     $query .= "WHERE post_id = {$post_id} ";
 
     queryToDB($query);
-    header("Location: posts.php");
+    //header("Location: posts.php");
+?>
+<p class="bg-success">Post updated. <a href="../post.php?p_id=<?php echo $post_id ?>">View Post</a></p>
+<p><a href="posts.php">View all posts</a></p>
+
+<?php
 }
 ?>
 

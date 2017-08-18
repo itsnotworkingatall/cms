@@ -30,7 +30,22 @@
                 }
                 ?>
 
+                <?php
+
+                if (isset($_SESSION['username'])) {
+                    if (isset($_GET['p_id'])) {
+                        $postId = $_GET['p_id'];
+
+                ?>
+
                 <li><a href="admin">Admin</a></li>
+                <li><a href="admin/posts.php?source=edit_post&post_id=<?php echo $postId ?>">Edit post</a></li>
+
+                <?php
+                    }
+                }
+                ?>
+
             </ul>
         </div>
         <!-- /.navbar-collapse -->

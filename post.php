@@ -47,8 +47,7 @@
             <hr>
             <img class="img-responsive" src="images/<?php echo $postImage ?>" alt="">
             <hr>
-            <p><?php echo nl2br($postContent) ?></p>
-
+            <p><?php echo nl2br(htmlspecialchars_decode($postContent)) ?></p>
 
             <hr>
 

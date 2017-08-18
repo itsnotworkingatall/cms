@@ -21,11 +21,8 @@ if (isset($_POST['create_post'])) {
     $query .= "VALUES ({$postCategory}, '{$postTitle}', '{$postAuthor}', now(), '{$postImage}', '{$postContent}', '{$postTags}', '{$postStatus}') ";
 
     queryToDB($query);
-
+    header("Location: posts.php");
 }
-
-
-
 
 ?>
 

@@ -27,7 +27,7 @@
                     $query = "SELECT * FROM posts WHERE post_status = 'published' ";
                     $count = "posts WHERE post_status = 'published' ";
                 } else {
-                    $query = "SELECT * FROM posts WHERE post_category_id = {$postCategoryId} ";
+                    $query = "SELECT * FROM posts WHERE post_category_id = {$postCategoryId} AND post_status = 'published' ";
                     $count = "posts WHERE post_category_id = {$postCategoryId} AND post_status = 'published' ";
                 }
                     $select_all_posts_query = queryToDB($query);
@@ -57,10 +57,13 @@
                 </p>
                 <p><span class="glyphicon glyphicon-time"></span> <?php echo $postDate ?></p>
                 <hr>
+                <a href="post.php?p_id=<?php echo $postId ?>">
                 <img class="img-responsive" src="images/<?php echo $postImage ?>" alt="">
+                </a>
                 <hr>
                 <p>
                     <?php
+                        $postContent = htmlspecialchars_decode($postContent);
                         $truncationValue = 202;
                         $truncatedPost = substr($postContent, 0, $truncationValue);
                         echo nl2br($truncatedPost);
@@ -80,7 +83,6 @@
                 ?>
 
             </div>
-
 
             <!-- Blog Sidebar Widgets Column -->
             <?php include "includes/sidebar.php" ?>
