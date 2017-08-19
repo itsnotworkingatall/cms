@@ -9,7 +9,8 @@ $selectAllPosts = queryToDB($query);
 
 while ($row = mysqli_fetch_assoc($selectAllPosts)) {
     $postId       = $row['post_id'];
-    $postAuthor   = $row['post_author'];
+    //$postAuthor   = $row['post_author'];
+    $postAuthorId = $row['post_author_id'];
     $postTitle    = $row['post_title'];
     $postCategory = $row['post_category_id'];
     $postImage    = $row['post_image'];
@@ -24,15 +25,13 @@ while ($row = mysqli_fetch_assoc($selectAllPosts)) {
 
 if (isset($_POST['update_post'])) {
     $postTitle     = $_POST['title'];
-    $postAuthor    = $_POST['author'];
+    $postAuthorId  = $_POST['author'];
     $postStatus    = $_POST['status'];
     $postImage     = $_FILES['image']['name'];
     $postImageTemp = $_FILES['image']['tmp_name'];
     $postTags      = $_POST['tags'];
     $postContent   = $_POST['content'];
     $postCategory  = $_POST['category'];
-
-
 
     $postContent = htmlspecialchars($postContent);
     $postContent = mysqli_real_escape_string($connectionToDB, $postContent);
@@ -47,25 +46,30 @@ if (isset($_POST['update_post'])) {
         }
     }
 
+
     $query = "UPDATE posts SET ";
-    $query .= "post_title   ='{$postTitle}', ";
-    $query .= "post_author  ='{$postAuthor}', ";
-    $query .= "post_status  ='{$postStatus}', ";
-    $query .= "post_image   ='{$postImage}', ";
-    $query .= "post_tags    ='{$postTags}', ";
-    $query .= "post_tags    ='{$postTags}', ";
-    $query .= "post_content ='{$postContent}', ";
+    $query .= "post_title       ='{$postTitle}', ";
+    //$query .= "post_author      ='{$postAuthor}', ";
+    $query .= "post_author_id   ='{$postAuthorId}', ";
+    $query .= "post_status      ='{$postStatus}', ";
+    $query .= "post_image       ='{$postImage}', ";
+    $query .= "post_tags        ='{$postTags}', ";
+    $query .= "post_tags        ='{$postTags}', ";
+    $query .= "post_content     ='{$postContent}', ";
     $query .= "post_category_id ='{$postCategory}' ";
-    $query .= "WHERE post_id = {$post_id} ";
+    $query .= "WHERE post_id    = {$post_id} ";
 
     queryToDB($query);
     //header("Location: posts.php");
+
+    }
+
 ?>
 <p class="bg-success">Post updated. <a href="../post.php?p_id=<?php echo $post_id ?>">View Post</a></p>
 <p><a href="posts.php">View all posts</a></p>
 
 <?php
-}
+//}
 ?>
 
 <form action="" method="post" enctype="multipart/form-data">
@@ -77,7 +81,27 @@ if (isset($_POST['update_post'])) {
 
    <div class="form-group">
         <label for="author">Post Author</label>
-        <input type="text" value="<?php echo $postAuthor ?>" class="form-control" name="author">
+        <select name="author">
+
+            <?php
+
+                $usersList = "SELECT * FROM users";
+                $selectAuthors = queryToDB($usersList);
+
+            while ($row = mysqli_fetch_assoc($selectAuthors)) {
+                $authorFName = $row['user_first_name'];
+                $authorLName = $row['user_last_name'];
+                $authorId    = $row['user_id'];
+                $authorName  = $authorFName . " " . $authorLName;
+                if ($authorId != $postAuthorId) {
+                    echo "<option value='$authorId'>$authorName</option>";
+                } else {
+                    echo "<option value='$authorId' selected>$authorName</option>";
+                }
+            }
+            ?>
+
+        </select>
    </div>
 
    <div class="form-group">

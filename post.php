@@ -24,10 +24,22 @@
 
                     while ($row = mysqli_fetch_assoc($select_all_posts_query)) {
                         $postTitle = $row['post_title'];
-                        $postAuthor = $row['post_author'];
+
+                        $postAuthorId = $row['post_author_id'];
                         $postDate = $row['post_date'];
                         $postImage = $row['post_image'];
                         $postContent = $row['post_content'];
+
+                        $postAuthor = getUserNameById($postAuthorId)
+//                        $getAuthor = "SELECT * FROM users WHERE user_id = {$postAuthorId} ";
+//                        $getPostAuthor = queryToDB($getAuthor);
+//
+//                        while ($row = mysqli_fetch_assoc($getPostAuthor)) {
+//                            $authorFName = $row['user_first_name'];
+//                            $authorLName = $row['user_last_name'];
+//                        }
+//
+//                        $postAuthor = $authorFName . " " . $authorLName;
 
             ?>
 
@@ -37,11 +49,9 @@
             </h1>
 
             <!-- First Blog Post -->
-            <h2>
-                <a href="#"><?php echo $postTitle ?></a>
-            </h2>
+            <h2><?php echo $postTitle ?></h2>
             <p class="lead">
-                by <a href="index.php"><?php echo $postAuthor ?></a>
+                by <a href="author.php?a_id=<?php echo $postAuthorId ?>"><?php echo $postAuthor ?></a>
             </p>
             <p><span class="glyphicon glyphicon-time"></span> <?php echo $postDate ?></p>
             <hr>

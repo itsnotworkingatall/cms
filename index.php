@@ -39,10 +39,11 @@
                     while ($row = mysqli_fetch_assoc($select_all_posts_query)) {
                         $postId = $row['post_id'];
                         $postTitle = $row['post_title'];
-                        $postAuthor = $row['post_author'];
                         $postDate = $row['post_date'];
                         $postImage = $row['post_image'];
                         $postContent = $row['post_content'];
+                        $postAuthorId = $row['post_author_id'];
+                        $postAuthor = getUserNameById($postAuthorId);
 
                 ?>
 
@@ -53,7 +54,7 @@
                     <a href="post.php?p_id=<?php echo $postId ?>"><?php echo $postTitle ?></a>
                 </h2>
                 <p class="lead">
-                    by <a href="index.php"><?php echo $postAuthor ?></a>
+                    by <a href="author.php?a_id=<?php echo $postAuthorId ?>"><?php echo $postAuthor ?></a>
                 </p>
                 <p><span class="glyphicon glyphicon-time"></span> <?php echo $postDate ?></p>
                 <hr>
@@ -66,7 +67,7 @@
                         $postContent = htmlspecialchars_decode($postContent);
                         $truncationValue = 202;
                         $truncatedPost = substr($postContent, 0, $truncationValue);
-                        echo nl2br($truncatedPost);
+                        echo nl2br(htmlspecialchars_decode($truncatedPost));
 
                     if (strlen($postContent) > strlen($truncatedPost)) {
                         echo "...";

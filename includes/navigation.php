@@ -30,6 +30,8 @@
                 }
                 ?>
 
+                <li><a href="admin">Admin</a></li>
+
                 <?php
 
                 if (isset($_SESSION['username'])) {
@@ -38,7 +40,6 @@
 
                 ?>
 
-                <li><a href="admin">Admin</a></li>
                 <li><a href="admin/posts.php?source=edit_post&post_id=<?php echo $postId ?>">Edit post</a></li>
 
                 <?php

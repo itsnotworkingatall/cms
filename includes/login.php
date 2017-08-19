@@ -32,6 +32,7 @@ if ($userName === $dbUName && $userPassword === $dbPassword) {
     $_SESSION['userlastname'] = $dbLName;
     $_SESSION['userrole'] = $dbRole;
     $_SESSION['userstatus'] = $dbStatus;
+    $_SESSION['userid'] = $dbId;
 
     header("Location: ../admin");
 

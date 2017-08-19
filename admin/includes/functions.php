@@ -128,3 +128,18 @@ function create_image()
     imagedestroy($imgH);//cleaning up the memory
     return $imageFileName;
 }
+
+function getUserNameById($postAuthorId) //takes user ID, returns full name
+{
+    $getAuthor = "SELECT * FROM users WHERE user_id = {$postAuthorId} ";
+    $getPostAuthor = queryToDB($getAuthor);
+
+    while ($row = mysqli_fetch_assoc($getPostAuthor)) {
+        $authorFName = $row['user_first_name'];
+        $authorLName = $row['user_last_name'];
+    }
+
+    $postAuthor = $authorFName . " " . $authorLName;
+
+    return $postAuthor;
+}

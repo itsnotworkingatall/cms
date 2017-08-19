@@ -3,7 +3,7 @@
 if (isset($_POST['create_post'])) {
 
     $postTitle = $_POST['title'];
-    $postAuthor = $_POST['author'];
+    $postAuthorId = $_POST['author'];
     $postDate = date('d-m-y');
 
     $postImage = $_FILES['image']['name'];
@@ -21,7 +21,15 @@ if (isset($_POST['create_post'])) {
     $query .= "VALUES ({$postCategory}, '{$postTitle}', '{$postAuthor}', now(), '{$postImage}', '{$postContent}', '{$postTags}', '{$postStatus}') ";
 
     queryToDB($query);
-    header("Location: posts.php");
+//    header("Location: posts.php");
+
+    $post_id = mysqli_insert_id($connectionToDB);
+
+
+?>
+<p class="bg-success">Post created. <a href="../post.php?p_id=<?php echo $post_id ?>">View Post</a></p>
+<p><a href="posts.php">View all posts</a></p>
+<?php
 }
 
 ?>
@@ -36,8 +44,28 @@ if (isset($_POST['create_post'])) {
 
     <div class="form-group">
         <label for="author">Post Author</label>
-        <input type="text" class="form-control" name="author">
-    </div>
+        <select name="author">
+
+            <?php
+
+                $usersList = "SELECT * FROM users";
+                $selectAuthors = queryToDB($usersList);
+
+            while ($row = mysqli_fetch_assoc($selectAuthors)) {
+                $authorFName = $row['user_first_name'];
+                $authorLName = $row['user_last_name'];
+                $authorId    = $row['user_id'];
+                $authorName  = $authorFName . " " . $authorLName;
+                if ($authorName != $postAuthor) {
+                    echo "<option value='$authorId'>$authorName</option>";
+                } else {
+                    echo "<option value='$authorId' selected>$authorName</option>";
+                }
+            }
+            ?>
+
+        </select>
+   </div>
 
     <div class="form-group">
         <label for="status">Post Status</label>

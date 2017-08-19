@@ -228,3 +228,20 @@ ul.alert-dropdown {
     margin-bottom: 20px;
     margin-right: 20px;
 }
+
+/* centering and cropping the images to squares */
+
+.thumbnail {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    overflow: hidden;
+    padding: 0px;
+    margin-bottom: 0px;
+}
+.thumbnail img {
+    height: 50px;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+}
