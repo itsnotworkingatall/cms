@@ -40,6 +40,18 @@ if (!isset($_SESSION['userrole']) || $_SESSION['userrole'] != 1 || $_SESSION['us
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
+        function deleteConfirmation(delId) {
+            var did = delId;
+            var del = confirm("Click this link again to delete the post");
+            if (del == true) {
+                did = location.href='?delete='+did;
+            } else {
+                del = "Don't delete";
+            }
+            document.getElementById(did).innerHTML = del;
+        }
+    </script>
 <!--    <script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=ii4qlq3tayu4k4x1khavro7uyhzghyljbkh41u4h2wxdu85r"></script>-->
 
 </head>

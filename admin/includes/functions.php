@@ -122,7 +122,7 @@ function create_image()
     //uncomment two lines below to create a png file
     $imageFileTimestamp = date("U") + rand(0, 255);
     $imageFileName = "image-" . $imageFileTimestamp .".png";
-    $imageFilePath = "../images/" . $imageFileName;
+    $imageFilePath = "C:\\xampp\htdocs\cms\images\\" . $imageFileName;
     imagepng($imgH, $imageFilePath);
 
     imagedestroy($imgH);//cleaning up the memory
@@ -142,4 +142,11 @@ function getUserNameById($postAuthorId) //takes user ID, returns full name
     $postAuthor = $authorFName . " " . $authorLName;
 
     return $postAuthor;
+}
+
+function escapeString($string)
+{
+    global $connectionToDB;
+    $string = mysqli_real_escape_string($connectionToDB, $string);
+    return $string;
 }

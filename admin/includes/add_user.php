@@ -6,10 +6,14 @@ if (isset($_POST['create_user'])) {
     $userFName = $_POST['fname'];
     $userLName = $_POST['lname'];
     $userEmail = $_POST['email'];
+    $userRole = $_POST['role'];
+
     $userPassword = $_POST['password'];
+    $userPassword = escapeString($userPassword);
+    $userPassword = password_hash($userPassword, PASSWORD_BCRYPT, array('cost' => 10));
+
     $userImage = $_FILES['image']['name'];
     $userImageTemp = $_FILES['image']['tmp_name'];
-    $userRole = $_POST['role'];
 
     move_uploaded_file($userImageTemp, "../images/$userImage");
 

@@ -17,8 +17,8 @@ if (isset($_POST['create_post'])) {
 
     move_uploaded_file($postImageTemp, "../images/$postImage");
 
-    $query = "INSERT INTO posts (post_category_id, post_title, post_author, post_date, post_image, post_content, post_tags, post_status) ";
-    $query .= "VALUES ({$postCategory}, '{$postTitle}', '{$postAuthor}', now(), '{$postImage}', '{$postContent}', '{$postTags}', '{$postStatus}') ";
+    $query = "INSERT INTO posts (post_category_id, post_title, post_author_id, post_date, post_image, post_content, post_tags, post_status) ";
+    $query .= "VALUES ({$postCategory}, '{$postTitle}', '{$postAuthorId}', now(), '{$postImage}', '{$postContent}', '{$postTags}', '{$postStatus}') ";
 
     queryToDB($query);
 //    header("Location: posts.php");
