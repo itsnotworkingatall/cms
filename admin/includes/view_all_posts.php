@@ -81,7 +81,7 @@ if (isset($_POST['checkBoxArray'])) {
 
         <?php // rendering the table with posts
 
-        $query = "SELECT * FROM posts";
+        $query = "SELECT * FROM posts ORDER BY post_id DESC";
         $selectAllPosts = queryToDB($query);
 
         while ($row = mysqli_fetch_assoc($selectAllPosts)) {
